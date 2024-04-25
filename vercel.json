@@ -5,7 +5,7 @@
         "headers": [
           {
             "key": "Feature-Policy",
-            "value": "usb \"*\""
+            "value": "usb=*"
           }
         ]
       }
