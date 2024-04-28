@@ -1,52 +1,45 @@
-const DEVICE_INFO = [{ vendorId: 1118, productId: 672, interfaceId: 0 }];
-let usbConnection = null;
+window.electronAPI.onButtonUpdate((value) => {
+	//console.log(value);
+	document.querySelector("#rawValue").innerHTML = value;
+});
 
-function getDeviceDetails(device) {
-	return device.productName || `Unknown device ${device.deviceId}`;
-}
+document.querySelectorAll("#green, #red, #yellow").forEach((column) => {
+	let score = 0;
+	const scoreHolder = document.createElement("div");
+	const displayScore = () => {
+		scoreHolder.innerHTML = score;
+	};
+	const updateScore = (val) => {
+		score = val;
+		displayScore();
+	};
 
-async function testIt() {
+	const oneButton = document.createElement("button");
+	oneButton.innerText = "+1";
+	oneButton.addEventListener("click", () => {
+		updateScore(++score);
+	});
 
-	// let device;
-	// navigator.usb
-	// 	.requestDevice({
-	// 		filters: DEVICE_INFO,
-	// 	})
-	// 	.then((selectedDevice) => {
-	// 		device = selectedDevice;
-	// 		return device.open();
-	// 	})
-	// 	.then(() => device.selectConfiguration(0))
-	// 	.then(() => device.claimInterface(1))
-	// 	.then(() => device.releaseInterface(1));
-        
+	const twoButton = document.createElement("button");
+	twoButton.innerText = "+2";
+	twoButton.addEventListener("click", () => {
+		updateScore(score + 2);
+	});
 
-	// return;
-	const noDevicesFoundMsg = "No devices found";
-	const grantedDevices = await navigator.usb.getDevices();
-	console.log(grantedDevices);
-	let grantedDeviceList = "";
-	if (grantedDevices.length > 0) {
-		for (const device of grantedDevices) {
-			grantedDeviceList += `<hr>${getDeviceDetails(device)}</hr>`;
-		}
-	} else {
-		grantedDeviceList = noDevicesFoundMsg;
-	}
-	document.getElementById("granted-devices").innerHTML = grantedDeviceList;
-
-	grantedDeviceList = "";
-	try {
-		const grantedDevice = await navigator.usb.requestDevice({
-			filters: [],
-		});
-		grantedDeviceList += `<hr>${getDeviceDetails(grantedDevice)}</hr>`;
-	} catch (ex) {
-		if (ex.name === "NotFoundError") {
-			grantedDeviceList = noDevicesFoundMsg;
-		}
-	}
-	document.getElementById("granted-devices2").innerHTML = grantedDeviceList;
-}
-
-document.getElementById("clickme").addEventListener("click", testIt);
+	const threeButton = document.createElement("button");
+	threeButton.innerText = "+3";
+	threeButton.addEventListener("click", () => {
+		updateScore(score + 3);
+	});
+	const resetButton = document.createElement("button");
+	resetButton.innerText = "Reset";
+	resetButton.addEventListener("click", () => {
+		updateScore(0);
+	});
+	column.appendChild(scoreHolder);
+	column.appendChild(oneButton);
+	column.appendChild(twoButton);
+	column.appendChild(threeButton);
+	column.appendChild(resetButton);
+	displayScore();
+});

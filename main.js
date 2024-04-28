@@ -1,12 +1,15 @@
 const usb = require("usb");
+const path = require("node:path");
 const DEVICE_INFO = [{ vendorId: 1118, productId: 672, interfaceId: 0 }];
 const webusb = new usb.WebUSB({
 	allowAllDevices: true,
 });
 let device;
 
-const newInitiateIR = async () => {
+const newInitiateIR = async (mainWindow) => {
 	const legacyDevice = usb.findByIds(1118, 672);
+	let canAccept = false;
+	let lastValue = "";
 
 	if (legacyDevice) {
 		legacyDevice.open();
@@ -19,8 +22,44 @@ const newInitiateIR = async () => {
 
 		const inEndpoint = legacyInterface.endpoints[0];
 
-		inEndpoint.on("data", (data) => {
-			console.log("Data", data);
+		inEndpoint.on("data", (usbEvent) => {
+			var dataView = new Uint8Array(usbEvent);
+			const whichController = dataView[2];
+			var decoded =
+				dataView[0] +
+				":" +
+				dataView[1] +
+				":" +
+				dataView[2] +
+				":" +
+				dataView[3] +
+				":" +
+				dataView[4];
+			if (lastValue !== decoded) {
+				if (whichController === 2) {
+					canAccept = true;
+					mainWindow.webContents.send("button-update", "reset");
+					lastValue = decoded;
+				} else if (canAccept === true) {
+					canAccept = false;
+					let whatToSend = "broken";
+					if (whichController === 0) whatToSend = "green";
+					else if (whichController === 1) whatToSend = "red";
+					else if (whichController === 3) whatToSend = "yellow";
+					mainWindow.webContents.send("button-update", whatToSend);
+					lastValue = decoded;
+				}
+			}
+
+			/*if (lastValue !== decoded) {
+				//console.log(decoded);
+				mainWindow.webContents.send("button-update", dataView);
+				lastValue = decoded;
+				clearTimeout(valueResetter);
+				valueResetter = setTimeout(() => {
+					lastValue = "";
+				}, 3000);
+			}*/
 		});
 
 		inEndpoint.on("error", (err) => {
@@ -37,13 +76,16 @@ function createWindow() {
 	const mainWindow = new BrowserWindow({
 		width: 800,
 		height: 600,
+		webPreferences: {
+			preload: path.join(__dirname, "preload.js"),
+		},
 	});
 
 	mainWindow.loadFile("index.html");
 
 	mainWindow.webContents.openDevTools();
 
-	newInitiateIR();
+	newInitiateIR(mainWindow);
 }
 
 app.whenReady().then(() => {

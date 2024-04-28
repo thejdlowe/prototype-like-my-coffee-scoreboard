@@ -2,17 +2,29 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<meta
-			http-equiv="Content-Security-Policy"
-			content="default-src 'self'; script-src 'self'"
+
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Like My Coffee</title>
+		<link
+			rel="stylesheet"
+			href="node_modules/bootstrap/dist/css/bootstrap.min.css"
 		/>
-		<title>WebUSB API</title>
+		<style>
+			html,
+			body {
+				height: 100%;
+			}
+		</style>
 	</head>
 	<body>
-		<h1>WebUSB API</h1>
-
-		<button id="clickme">Start IR Receiver</button>
-
+		<div class="container-fluid vh-100">
+			<div class="row h-75">
+				<div class="col h-100 d-inline-block" id="green">Player 1</div>
+				<div class="col h-100 d-inline-block" id="red">Player 2</div>
+				<div class="col h-100 d-inline-block" id="yellow">Player 3</div>
+			</div>
+			<div class="row h-25" id="rawValue"></div>
+		</div>
 		<script src="./renderer.js"></script>
 	</body>
 </html>
