@@ -1,9 +1,17 @@
 window.electronAPI.onButtonUpdate((value) => {
-	//console.log(value);
-	document.querySelector("#rawValue").innerHTML = value;
+	console.log(value);
+	if (value === "reset") {
+		document.querySelectorAll("#P1, #P2, #P3").forEach((el) => {
+			el.style.backgroundColor = "white";
+		});
+		document.querySelector("#rawValue").innerHTML = value;
+	} else {
+		const el = document.querySelector(`#${value}`);
+		el.style.backgroundColor = el.dataset.background;
+	}
 });
 
-document.querySelectorAll("#green, #red, #yellow").forEach((column) => {
+document.querySelectorAll("#P1, #P2, #P3").forEach((column) => {
 	let score = 0;
 	const scoreHolder = document.createElement("div");
 	const displayScore = () => {

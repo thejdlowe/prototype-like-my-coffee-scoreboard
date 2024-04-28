@@ -39,13 +39,14 @@ const newInitiateIR = async (mainWindow) => {
 				if (whichController === 2) {
 					canAccept = true;
 					mainWindow.webContents.send("button-update", "reset");
+					console.log("Reset");
 					lastValue = decoded;
 				} else if (canAccept === true) {
 					canAccept = false;
 					let whatToSend = "broken";
-					if (whichController === 0) whatToSend = "green";
-					else if (whichController === 1) whatToSend = "red";
-					else if (whichController === 3) whatToSend = "yellow";
+					if (whichController === 0) whatToSend = "P1";
+					else if (whichController === 1) whatToSend = "P2";
+					else if (whichController === 3) whatToSend = "P3";
 					mainWindow.webContents.send("button-update", whatToSend);
 					lastValue = decoded;
 				}
