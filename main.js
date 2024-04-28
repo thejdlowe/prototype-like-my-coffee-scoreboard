@@ -39,7 +39,6 @@ const newInitiateIR = async (mainWindow) => {
 				if (whichController === 2) {
 					canAccept = true;
 					mainWindow.webContents.send("button-update", "reset");
-					console.log("Reset");
 					lastValue = decoded;
 				} else if (canAccept === true) {
 					canAccept = false;
@@ -51,16 +50,6 @@ const newInitiateIR = async (mainWindow) => {
 					lastValue = decoded;
 				}
 			}
-
-			/*if (lastValue !== decoded) {
-				//console.log(decoded);
-				mainWindow.webContents.send("button-update", dataView);
-				lastValue = decoded;
-				clearTimeout(valueResetter);
-				valueResetter = setTimeout(() => {
-					lastValue = "";
-				}, 3000);
-			}*/
 		});
 
 		inEndpoint.on("error", (err) => {
@@ -83,8 +72,9 @@ function createWindow() {
 	});
 
 	mainWindow.loadFile("index.html");
+	mainWindow.maximize();
 
-	mainWindow.webContents.openDevTools();
+	//mainWindow.webContents.openDevTools();
 
 	newInitiateIR(mainWindow);
 }

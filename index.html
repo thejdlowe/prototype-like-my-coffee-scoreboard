@@ -18,34 +18,73 @@
 			.playerCol {
 				transition: background 1s ease;
 			}
+
+			/* .background-logo::before {
+				content: "";
+				z-index: 1;
+
+				background-image: url("images/logo.png");
+				opacity: 0.2;
+				background-position: center;
+				background-size: 40%;
+				background-repeat: no-repeat;
+			}
+
+			 */
+			.my-containers {
+				position: absolute;
+				height: 100%;
+				width: 100%;
+			}
+
+			.my-containers img {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				left: 0;
+				margin: auto;
+			}
 		</style>
 	</head>
 	<body>
-		<div class="container-fluid vh-100">
+		<div class="my-containers">
+			<img
+				src="images/logo.png"
+				style="
+					display: block;
+					position: absolute;
+					width: 40%;
+					opacity: 0.2;
+					z-index: 1;
+				"
+			/>
+		</div>
+		<div class="container-fluid vh-100 my-containers">
 			<div class="row h-75">
 				<div
 					class="col h-100 d-inline-block playerCol"
-					data-background="green"
+					data-background="#3cdb4e"
 					id="P1"
 				>
 					Player 1
 				</div>
 				<div
 					class="col h-100 d-inline-block playerCol"
-					data-background="red"
+					data-background="#d04242"
 					id="P2"
 				>
 					Player 2
 				</div>
 				<div
 					class="col h-100 d-inline-block playerCol"
-					data-background="yellow"
+					data-background="#ecdb33"
 					id="P3"
 				>
 					Player 3
 				</div>
 			</div>
-			<div class="row h-25" id="rawValue"></div>
+			<div class="row h-25" id="rawValue">Not Ready</div>
 		</div>
 		<script src="./renderer.js"></script>
 	</body>
