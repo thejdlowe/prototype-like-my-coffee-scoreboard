@@ -7,4 +7,4 @@ This is the software needed for the electron app that powers the Like My Coffee 
 ### Hardware
 
 1. A Raspberry Pi 3 or higher (I happened to have a 3 to spare; it SHOULD work without any issues otherwise?)
-2. A [text](https://en.wikipedia.org/wiki/Scene_It%3F_Lights,_Camera,_Action#Big_Button_Pad)
+2. An [X-Box 360 _Scene It?_ Infrared Receiver and corresponding controllers](https://en.wikipedia.org/wiki/Scene_It%3F_Lights,_Camera,_Action#Big_Button_Pad)
