@@ -19,18 +19,6 @@
 				transition: background 1s ease;
 			}
 
-			/* .background-logo::before {
-				content: "";
-				z-index: 1;
-
-				background-image: url("images/logo.png");
-				opacity: 0.2;
-				background-position: center;
-				background-size: 40%;
-				background-repeat: no-repeat;
-			}
-
-			 */
 			.my-containers {
 				position: absolute;
 				height: 100%;
@@ -61,7 +49,7 @@
 			/>
 		</div>
 		<div class="container-fluid vh-100 my-containers">
-			<div class="row h-75">
+			<div class="row h-100">
 				<div
 					class="col h-100 d-inline-block playerCol"
 					data-background="#3cdb4e"
@@ -84,7 +72,18 @@
 					Player 3
 				</div>
 			</div>
-			<div class="row h-25" id="rawValue">Not Ready</div>
+			<div
+				style="
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					z-index: 9999;
+					display: none;
+				"
+				id="debug"
+			>
+				<span id="rawValue">Not Ready</span>
+			</div>
 		</div>
 		<script src="./renderer.js"></script>
 	</body>

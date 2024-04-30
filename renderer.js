@@ -1,14 +1,26 @@
+const state = {
+	current: "title",
+	players: [
+		{ name: "", score: 0 },
+		{ name: "", score: 0 },
+		{ name: "", score: 0 },
+	],
+};
 window.electronAPI.onButtonUpdate((value) => {
-	if (value === "reset") {
+	if (value === "ready") {
 		document.querySelectorAll("#P1, #P2, #P3").forEach((el) => {
 			el.style.backgroundColor = "white";
 		});
 		document.querySelector("#rawValue").innerHTML = "Ready";
-	} else {
+	} else if (["P1", "P2", "P3"].includes(value)) {
 		const el = document.querySelector(`#${value}`);
 		el.style.backgroundColor = el.dataset.background;
 		document.querySelector("#rawValue").innerHTML = "Not Ready";
 	}
+});
+
+document.querySelector("body").addEventListener("mousemove", () => {
+	document.querySelector("#debug").style.display = "block";
 });
 
 document.querySelectorAll("#P1, #P2, #P3").forEach((column) => {
@@ -21,6 +33,12 @@ document.querySelectorAll("#P1, #P2, #P3").forEach((column) => {
 		score = val;
 		displayScore();
 	};
+
+	const zeroButton = document.createElement("button");
+	zeroButton.innerText = "+0";
+	zeroButton.addEventListener("click", () => {
+		updateScore(score);
+	});
 
 	const oneButton = document.createElement("button");
 	oneButton.innerText = "+1";
@@ -45,6 +63,7 @@ document.querySelectorAll("#P1, #P2, #P3").forEach((column) => {
 		updateScore(0);
 	});
 	column.appendChild(scoreHolder);
+	column.appendChild(zeroButton);
 	column.appendChild(oneButton);
 	column.appendChild(twoButton);
 	column.appendChild(threeButton);
